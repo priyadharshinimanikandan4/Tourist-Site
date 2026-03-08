@@ -1,0 +1,5 @@
+# Jekyll configuration file
+
+# Exclude directories or files from the build
+exclude:
+  - node_modules
