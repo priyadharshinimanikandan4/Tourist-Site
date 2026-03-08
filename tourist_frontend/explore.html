@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="img/fav.png">
+    <meta name="author" content="Jatin Chauhan">
+    <meta name="description" content="Explore World is a tour and travel website.">
+    <meta name="keywords" content="travel, tour, India, explore">
+    <meta charset="UTF-8">
+    <title>ExploreWorld</title>
+    <link rel="icon" href="./img/j.jpg" type="image/jpg">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+    
+    <style>
+        /* General body and container styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #fff;
+        }body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header and Navigation Styles */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 15px 0;
+            position: relative;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 25px;
+        }
+
+        header ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        header ul li a:hover {
+            color: #ff4d4d;
+        }
+        
+        /* Main content and destination card styles */
+        .destination-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            padding: 40px 0;
+        }
+
+        .destination-card {
+            background: #2c2c2c;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease-in-out;
+            border: 2px solid #ff4d4d;
+        }
+
+        .destination-card:hover {
+            transform: scale(1.05);
+        }
+
+        .destination-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 2px solid #ff4d4d;
+        }
+
+        .destination-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .destination-info h3 {
+            margin-top: 0;
+            color: #ff4d4d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.6rem;
+        }
+
+        .destination-info p {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        .destination-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .destination-buttons .btn {
+            flex-grow: 1;
+        }
+
+        .btn {
+            width: auto;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            background-color: #ff4d4d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #e63946;
+        }
+        
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header and Navigation Styles */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 15px 0;
+            position: relative;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+/* Unified Image Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1px; /* Changed from 25px to 1px */
+}
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        header ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 25px;
+        }
+
+        header ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        header ul li a:hover {
+            color: #ff4d4d;
+        }
+
+        /* Hero Section Styles */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            padding: 0 20px;
+            border-bottom: 5px solid #ff4d4d;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            color: #ccc;
+        }
+
+        .hero .btn {
+            width: auto;
+            padding: 20px 40px;
+            text-transform: uppercase;
+            background-color: #ff4d4d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero .btn:hover {
+            background-color: #e63946;
+        }
+
+        /* Portfolio Section */
+        .portfolio-area {
+            padding: 60px 0;
+        }
+
+        .portfolio-area .title h1 {
+            color: #ff4d4d;
+        }
+
+        .filters {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .filters ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap; /* Added for better responsiveness */
+            justify-content: center;
+            gap: 20px;
+        }
+        .filters ul li {
+            cursor: pointer;
+            padding: 10px 20px;
+            border: 1px solid #ff4d4d;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .filters ul li.active, .filters ul li:hover {
+            background-color: #ff4d4d;
+            color: #fff;
+        }
+
+        /* Unified Image Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .single-portfolio {
+            background: #2c2c2c;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border: 2px solid #ff4d4d;
+            transition: transform 0.3s ease-in-out;
+            cursor: pointer; /* Added for better UX */
+        }
+
+        .single-portfolio:hover {
+            transform: scale(1.05);
+        }
+
+        .single-portfolio img {
+            width: 100%;
+            height: 250px; /* fixed uniform size */
+            object-fit: cover;
+            border-bottom: 2px solid #ff4d4d;
+            display: block;
+        }
+        header {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 0;
+    position: relative;
+    z-index: 1000;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between; /* This is the key change */
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+header ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 25px;
+}
+
+header ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+header ul li a:hover {
+    color: #ff4d4d;
+}
+/* Make navbar logo smaller */
+header .navbar-brand img {
+    height: 50px;   /* adjust height */
+    width: auto;    /* keep proportions */
+}
+
+        .p-inner {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .p-inner h4, .p-inner h5 {
+            margin: 0;
+            color: #ff4d4d;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+        }
+
+        .p-inner .cat {
+            color: #ccc;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="protfolio-wrap">
+        <header class="default-header">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container">
+
+                    <a class="navbar-brand" href="index.html">
+                    
+            <div class="logo">EXPLOREWORLD</div>
+                        <img src="./img/logo.png" alt="explore">
+                    
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="text-white lnr lnr-menu"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+                        <ul class="navbar-nav">
+                            <li><a href="index.html">HOME</a></li>
+                            <li><a href="blog.html">BLOG</a></li>
+                            <li><a href="iterny.html">ITINERARY PLANNER</a></li>
+                           <li><a href="#portfolio">PLACES</a></li>
+                            <li><a href="#signup">SIGN UP</a></li>
+                            <li><a href="about.html">ABOUT US</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <section class="banner-area relative" id="home">
+            <div class="overlay overlay-bg"></div>
+            <div class="container">
+                <div class="row fullscreen d-flex align-items-center justify-content-center">
+                    <div class="banner-content col-lg-10">
+                    
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+
+        <main>
+            <section class="portfolio-area section-gap" id="portfolio">
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <div class="menu-content col-lg-10">
+                            <div class="title text-center">
+                                <h1 class="mb-10">You'll fall in love with these places</h1>
+                                <p>Explore from India to the World</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filters">
+                        <ul>
+                            <li class="active" data-filter="*">All</li>
+                            <li data-filter=".north">North</li>
+                            <li data-filter=".central">Central</li>
+                            <li data-filter=".northeastern">North-Eastern</li>
+                            <li data-filter=".south">South</li>
+                            <li data-filter=".world">World</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="filters-content">
+                        <div class="grid">
+                            <div class="single-portfolio north">
+                                <a href="booking.html?place=golden-temple">
+                                <img src="img/p1.jpg" alt="Golden Temple">
+                                <div class="p-inner">
+                                    <h4>Golden Temple</h4>
+                                    <div class="cat">Punjab</div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="single-portfolio central">
+                                <a href="booking.html?place=gwalior-fort">
+                                <img src="img/p2.jpg" alt="Gwalior Fort">
+                                <div class="p-inner">
+                                    <h4>Gwalior Fort</h4>
+                                    <div class="cat">Madhya Pradesh</div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="single-portfolio northeastern">
+                                <a href="booking.html?place=twang">
+                                <img src="img/p9.jpg" alt="Twang">
+                                <div class="p-inner">
+                                    <h4>Twang</h4>
+                                    <div class="cat">Arunachal Pradesh</div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="single-portfolio south">
+                                <a href="booking.html?place=alleppey">
+                                <img src="img/p12.jpg" alt="Alleppey">
+                                <div class="p-inner">
+                                    <h4>Alleppey</h4>
+                                    <div class="cat">Kerala</div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="single-portfolio central">
+                                <a href="booking.html?place=camel-safari">
+                                <img src="img/p5.jpg" alt="Camel Safari">
+                                <div class="p-inner">
+                                    <h4>Camel Safari</h4>
+                                    <div class="cat">Rajasthan</div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="single-portfolio central">
+                                <a href="booking.html?place=sanchi-stupa">
+                                <img src="img/p6.jpg" alt="Sanchi Stupa">
+                                <div class="p-inner">
+                                    <h4>Sanchi Stupa</h4>
+                                    <div class="cat">Madhya Pradesh</div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="single-portfolio northeastern">
+                                <a href="booking.html?place=umngot-river">
+                                <img src="img/p7.jpg" alt="Umngot river">
+                                <div class="p-inner">
+                                    <h4>Umngot River</h4>
+                                    <div class="cat">Meghalaya</div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="single-portfolio south">
+                                <a href="booking.html?place=vivekananda-">
+                                <img src="img/p10.jpg" alt="Vivekananda Rock">
+                                <div class="p-inner">
+                                    <h4>Vivekananda Rock</h4>
+                                    <div class="cat">Tamil Nadu</div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="single-portfolio north">
+                                <img src="img/p4.jpg" alt="Mehrangarh Fort">
+                                <div class="p-inner">
+                                    <h4>Mehrangarh Fort</h4>
+                                    <div class="cat">Rajasthan</div>
+                                </div>
+                            </div>
+                            <div class="single-portfolio south">
+                                <img src="img/p3.jpg" alt="Hampi">
+                                <div class="p-inner">
+                                    <h4>Hampi</h4>
+                                    <div class="cat">Karnataka</div>
+                                </div>
+                            </div>
+                            <div class="single-portfolio northeastern">
+                                <img src="img/p8.jpg" alt="Mon">
+                                <div class="p-inner">
+                                    <h4>Mon</h4>
+                                    <div class="cat">Nagaland</div>
+                                </div>
+                            </div>
+                            <div class="single-portfolio south">
+                                <img src="img/p11.jpg" alt="Colva Beach">
+                                <div class="p-inner">
+                                    <h4>Colva Beach</h4>
+                                    <div class="cat">Goa</div>
+                                </div>
+                            </div>
+                            <div class="single-portfolio world">
+                                <img src="img/tajmahal.jpg" alt="Taj Mahal">
+                                <div class="p-inner">
+                                    <h4>Taj Mahal</h4>
+                                    <div class="cat">India</div>
+                                </div>
+                            </div>
+                            <div class="single-portfolio world">
+                                <img src="img/goa_beach.jpg" alt="Goa Beaches">
+                                <div class="p-inner">
+                                    <h4>Goa Beaches</h4>
+                                    <div class="cat">India</div>
+                                </div>
+                            </div>
+                            <div class="single-portfolio world">
+                                <img src="img/manali.jpg" alt="Manali">
+                                <div class="p-inner">
+                                    <h4>Manali</h4>
+                                    <div class="cat">India</div>
+                                </div>
+                            </div>
+                            <div class="single-portfolio world">
+                                <img src="img/newyork.jpg" alt="New York">
+                                <div class="p-inner">
+                                    <h4>New York</h4>
+                                    <div class="cat">USA</div>
+                                </div>
+                            </div>
+                            <div class="single-portfolio world">
+                                <img src="img/paris.jpg" alt="Paris">
+                                <div class="p-inner">
+                                    <h4>Paris</h4>
+                                    <div class="cat">France</div>
+                                </div>
+                            </div>
+                            <div class="single-portfolio world">
+                                <img src="img/great_barrier.jpg" alt="Great Barrier Reef">
+                                <div class="p-inner">
+                                    <h4>Great Barrier Reef</h4>
+                                    <div class="cat">Australia</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 ExploreWorld. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/easing.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/parallax.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var grid = document.querySelector('.grid');
+            var iso = new Isotope(grid, {
+                itemSelector: '.single-portfolio',
+                layoutMode: 'fitRows'
+            });
+
+            var filtersElem = document.querySelector('.filters ul');
+            filtersElem.addEventListener('click', function(event) {
+                if (!matchesSelector(event.target, 'li')) {
+                    return;
+                }
+                var filterValue = event.target.getAttribute('data-filter');
+                iso.arrange({ filter: filterValue });
+
+                // Update active class
+                var currentActive = filtersElem.querySelector('.active');
+                if (currentActive) {
+                    currentActive.classList.remove('active');
+                }
+                event.target.classList.add('active');
+            });
+
+            // Helper function for event delegation
+            var matchesSelector = function(elem, selector) {
+                var matches = elem.matches || elem.webkitMatchesSelector || elem.mozMatchesSelector || elem.msMatchesSelector;
+                return matches.call(elem, selector);
+            };
+        });
+    </script>
+</body>
+</html>

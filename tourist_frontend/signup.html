@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExploreWorld - Signup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General body and font styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #74a0e0, #c3a1f3);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header and navigation */
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4b5258;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        nav ul a:hover {
+            color: #5d5dff;
+            transform: translateY(-2px);
+        }
+
+        /* Main content and form card */
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .form-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 450px;
+            box-sizing: border-box;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-card h2 {
+            font-size: 2.2rem;
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        /* Form groups and inputs */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            color: #333;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #5d5dff;
+            box-shadow: 0 0 0 4px rgba(93, 93, 255, 0.2);
+        }
+
+        /* Button styles */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(45deg, #74a0e0, #c3a1f3);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">EXPLOREWORLD</div>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="explore.html">EXPLORE</a></li>
+                <li><a href="login.html">LOGIN</a></li>
+                <li><a href="signup.html">SIGNUP</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-card">
+            <h2>CREATE A NEW ACCOUNT</h2>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="fullName">FULL NAME</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">EMAIL</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">PASSWORD</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn">SIGN UP</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

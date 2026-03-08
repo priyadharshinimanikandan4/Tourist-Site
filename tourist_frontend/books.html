@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Tour Booking</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    :root {
+        --primary-color: #007bff;
+        --primary-hover-color: #0056b3;
+        --background-color: #f4f7f9;
+        --card-background: #ffffff;
+        --text-color: #333333;
+        --heading-color: #2c3e50;
+        --border-color: #e0e6ed;
+        --shadow-light: rgba(0, 0, 0, 0.08);
+        --shadow-medium: rgba(0, 0, 0, 0.12);
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        /* --- GRADIENT ADDITION --- */
+        background-image: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+        /* --- END OF GRADIENT ADDITION --- */
+        color: var(--text-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    .booking-card {
+        background: rgba(255, 255, 255, 0.9); /* Slightly translucent */
+        backdrop-filter: blur(10px); /* Adds a cool blur effect */
+        padding: 2.5rem;
+        border-radius: 16px;
+        /* --- UPDATED SHADOW --- */
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); 
+        /* --- END OF UPDATED SHADOW --- */
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .booking-card h1 {
+        color: var(--heading-color);
+        font-weight: 700;
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .booking-card p.subtitle {
+        color: #7f8c8d;
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    form, #payment-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        text-align: left;
+    }
+
+    label {
+        font-weight: 600;
+        color: var(--heading-color);
+        font-size: 0.95rem;
+        margin-bottom: 0.25rem;
+    }
+
+    input, select, button, #card-element {
+        padding: 0.9rem 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        font-size: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus, button:focus, #card-element.StripeElement--focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    }
+
+    button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+        background-color: var(--primary-hover-color);
+        transform: translateY(-2px);
+    }
+
+    #total-amount {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--heading-color);
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    #total-amount strong {
+        color: var(--primary-color);
+    }
+
+    #card-element {
+        background-color: #fcfdff;
+    }
+
+    #card-errors {
+        color: #e74c3c;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+    }
+
+    .modal-content {
+        background-color: var(--card-background);
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+        position: relative;
+    }
+
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #bdc3c7;
+    }
+    
+    .button-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .button-group .back-button {
+        background-color: #95a5a6;
+    }
+
+    .button-group .back-button:hover {
+        background-color: #7f8c8d;
+    }
+
+        :root {
+            --primary-color: #007bff;
+            --primary-hover-color: #0056b3;
+            --background-color: #f4f7f9;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --heading-color: #2c3e50;
+            --border-color: #e0e6ed;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            line-height: 1.6; /* Corrected: Added missing value */
+        }
+
+        .booking-card {
+            background: var(--card-background);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px var(--shadow-medium);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .booking-card h1 {
+            color: var(--heading-color);
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .booking-card p.subtitle {
+            color: #7f8c8d;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        form, #payment-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            text-align: left;
+        }
+
+        label {
+            font-weight: 600;
+            color: var(--heading-color);
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        input, select, button, #card-element {
+            padding: 0.9rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, button:focus, #card-element.StripeElement--focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover-color);
+            transform: translateY(-2px);
+        }
+
+        #total-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--heading-color);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        #total-amount strong {
+            color: var(--primary-color);
+        }
+
+        #card-element {
+            background-color: #fcfdff;
+        }
+
+        #card-errors {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background-color: var(--card-background);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #bdc3c7;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .button-group .back-button {
+            background-color: #95a5a6;
+        }
+
+        .button-group .back-button:hover {
+            background-color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="booking-card">
+        <h1>Complete Your Tour Booking</h1>
+        <p class="subtitle">Just a few steps to start your unforgettable adventure!</p>
+        
+        <form id="booking-form">
+            <label for="destination">Choose Your Tour Package:</label>
+            <select id="destination" name="destination" required>
+                <option value="Golden Temple" data-price="250">Golden Temple, Punjab ($250)</option>
+                <option value="Gwalior Fort" data-price="200">Gwalior Fort, Madhya Pradesh ($200)</option>
+                <option value="Twang" data-price="350">Twang, Arunachal Pradesh ($350)</option>
+                <option value="Alleppey" data-price="300">Alleppey, Kerala ($300)</option>
+                <option value="Camel Safari" data-price="220">Camel Safari, Rajasthan ($220)</option>
+                <option value="Sanchi Stupa" data-price="180">Sanchi Stupa, Madhya Pradesh ($180)</option>
+                <option value="Umngot River" data-price="280">Umngot River, Meghalaya ($280)</option>
+                <option value="Vivekananda Rock" data-price="270">Vivekananda Rock, Tamil Nadu ($270)</option>
+                <option value="Mehrangarh Fort" data-price="240">Mehrangarh Fort, Rajasthan ($240)</option>
+                <option value="Hampi" data-price="260">Hampi, Karnataka ($260)</option>
+                <option value="Mon" data-price="380">Mon, Nagaland ($380)</option>
+                <option value="Colva Beach" data-price="210">Colva Beach, Goa ($210)</option>
+                <option value="Taj Mahal" data-price="400">Taj Mahal, India ($400)</option>
+                <option value="Goa Beaches" data-price="320">Goa Beaches, India ($320)</option>
+                <option value="Manali" data-price="290">Manali, India ($290)</option>
+                <option value="New York" data-price="550">New York, USA ($550)</option>
+                <option value="Paris" data-price="600">Paris, France ($600)</option>
+                <option value="Great Barrier Reef" data-price="700">Great Barrier Reef, Australia ($700)</option>
+            </select>
+            
+            <label for="num-people">Number of People Traveling:</label>
+            <input type="number" id="num-people" value="1" min="1" required>
+            
+            <label for="date">Select Your Preferred Date:</label>
+            <input type="date" id="date" required>
+            
+            <h2 id="total-amount"><strong>Total:</strong> $0</h2>
+            <button type="submit" id="proceed-button">Proceed to Payment</button>
+        </form>
+
+        <div id="payment-section" style="display: none;">
+            <h2>Enter Payment Details</h2>
+            <p class="subtitle">Your payment is processed securely via Stripe.</p>
+            <div id="card-element"></div>
+            <div id="card-errors" role="alert"></div>
+            <div class="button-group">
+                <button id="back-button" class="back-button">Back</button>
+                <button id="pay-button">Pay Now</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="auth-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Log In or Sign Up</h2>
+            <p>Please log in to continue with your booking.</p>
+        </div>
+    </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bookingForm = document.getElementById('booking-form');
+            const destinationSelect = document.getElementById('destination');
+            const numPeopleInput = document.getElementById('num-people');
+            const dateInput = document.getElementById('date');
+            const totalAmountEl = document.getElementById('total-amount');
+            const proceedButton = document.getElementById('proceed-button');
+            const paymentSection = document.getElementById('payment-section');
+            const payButton = document.getElementById('pay-button');
+            const backButton = document.getElementById('back-button');
+            const cardErrors = document.getElementById('card-errors');
+            const authModal = document.getElementById('auth-modal');
+            const closeModalButton = document.querySelector('.close-button');
+            
+            // NOTE: Replace with your Stripe Publishable Key
+            const stripe = Stripe('pk_test_...'); 
+            const elements = stripe.elements();
+            const cardElement = elements.create('card');
+
+            // Mount the card element once when the page loads
+            cardElement.mount('#card-element');
+            
+            let totalAmount = 0;
+
+            const updateAmount = () => {
+                const selectedOption = destinationSelect.options[destinationSelect.selectedIndex];
+                const basePrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+                const numPeople = parseInt(numPeopleInput.value) || 1;
+                totalAmount = basePrice * numPeople;
+                totalAmountEl.innerHTML = `<strong>Total:</strong> $${totalAmount}`;
+            };
+
+            destinationSelect.addEventListener('change', updateAmount);
+            numPeopleInput.addEventListener('input', updateAmount);
+            updateAmount();
+
+            bookingForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                // This is a placeholder for a real user check
+                const user = JSON.parse(localStorage.getItem('currentUser'));
+                if (!user) {
+                    authModal.style.display = 'flex';
+                    return;
+                }
+
+                const tourName = destinationSelect.value;
+                const numPeople = parseInt(numPeopleInput.value);
+                const bookingDate = dateInput.value;
+                
+                if (totalAmount > 0 && tourName && numPeople > 0 && bookingDate) {
+                    // Show payment section and hide the proceed button
+                    proceedButton.style.display = 'none';
+                    paymentSection.style.display = 'flex';
+                } else {
+                    alert('Please select a valid tour, number of people, and date.');
+                }
+            });
+
+            payButton.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const { token, error } = await stripe.createToken(cardElement);
+
+                if (error) {
+                    cardErrors.textContent = error.message;
+                } else {
+                    console.log('Stripe Token:', token);
+                    alert(`Payment of $${totalAmount} processed successfully! Your booking is confirmed.`);
+                    // Here, you would typically send the token and other booking data to your server
+                    // to finalize the payment and booking.
+                }
+            });
+
+            backButton.addEventListener('click', () => {
+                // Go back to the booking form
+                proceedButton.style.display = 'block';
+                paymentSection.style.display = 'none';
+            });
+            
+            closeModalButton.addEventListener('click', () => {
+                authModal.style.display = 'none';
+            });
+        });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const bookingForm = document.getElementById('booking-form');
+        const destinationSelect = document.getElementById('destination');
+        const numPeopleInput = document.getElementById('num-people');
+        const dateInput = document.getElementById('date');
+        const totalAmountEl = document.getElementById('total-amount');
+        const proceedButton = document.getElementById('proceed-button');
+        const paymentSection = document.getElementById('payment-section');
+        const payButton = document.getElementById('pay-button');
+        const backButton = document.getElementById('back-button');
+        const cardErrors = document.getElementById('card-errors');
+        const authModal = document.getElementById('auth-modal');
+        const closeModalButton = document.querySelector('.close-button');
+        
+        // NOTE: Replace with your Stripe Publishable Key
+        const stripe = Stripe('pk_test_...'); 
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+
+        // Mount the card element once when the page loads
+        cardElement.mount('#card-element');
+        
+        let totalAmount = 0;
+
+        const updateAmount = () => {
+            const selectedOption = destinationSelect.options[destinationSelect.selectedIndex];
+            const basePrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+            const numPeople = parseInt(numPeopleInput.value) || 1;
+            totalAmount = basePrice * numPeople;
+            totalAmountEl.innerHTML = `<strong>Total:</strong> $${totalAmount}`;
+        };
+
+        destinationSelect.addEventListener('change', updateAmount);
+        numPeopleInput.addEventListener('input', updateAmount);
+        updateAmount();
+
+        bookingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // This is a placeholder for a real user check
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (!user) {
+                authModal.style.display = 'flex';
+                return;
+            }
+
+            const tourName = destinationSelect.value;
+            const numPeople = parseInt(numPeopleInput.value);
+            const bookingDate = dateInput.value;
+            
+            if (totalAmount > 0 && tourName && numPeople > 0 && bookingDate) {
+                // Show payment section and hide the proceed button
+                proceedButton.style.display = 'none';
+                paymentSection.style.display = 'flex';
+            } else {
+                alert('Please select a valid tour, number of people, and date.');
+            }
+        });
+
+        payButton.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const { token, error } = await stripe.createToken(cardElement);
+
+            if (error) {
+                cardErrors.textContent = error.message;
+            } else {
+                console.log('Stripe Token:', token);
+                alert(`Payment of $${totalAmount} processed successfully! Your booking is confirmed.`);
+                // Here, you would typically send the token and other booking data to your server
+                // to finalize the payment and booking.
+            }
+        });
+
+        backButton.addEventListener('click', () => {
+            // Go back to the booking form
+            proceedButton.style.display = 'block';
+            paymentSection.style.display = 'none';
+        });
+        
+        closeModalButton.addEventListener('click', () => {
+            authModal.style.display = 'none';
+        });
+
+        // --- NEW CODE STARTS HERE ---
+
+        // Function to get query parameters from the URL
+        function getQueryParams() {
+            const params = {};
+            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, (m, key, value) => {
+                params[key] = value;
+            });
+            return params;
+        }
+
+        const params = getQueryParams();
+        const place = params.place;
+
+        if (place) {
+            const sanitizedPlace = place.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            for (let i = 0; i < destinationSelect.options.length; i++) {
+                if (destinationSelect.options[i].value.toLowerCase() === sanitizedPlace.toLowerCase()) {
+                    destinationSelect.selectedIndex = i;
+                    updateAmount(); // Recalculate total with the new selection
+                    break;
+                }
+            }
+        }
+
+        // --- NEW CODE ENDS HERE ---
+    });
+</script>
+</body>
+</html>

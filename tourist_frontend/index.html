@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExploreWorld - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* General body and font styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header and navigation */
+        header {
+            background-color: #ffffff;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul a:hover {
+            color: #007bff;
+        }
+
+        /* Hero section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            padding: 0 20px;
+            border-bottom: 5px solid #ff4d4d;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            color: #ccc;
+        }
+
+        .hero .btn {
+            width: auto;
+            padding: 20px 40px;
+            background-color: #ff4d4d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero .btn:hover {
+            background-color: #e63946;
+        }
+
+        /* Payment Section Styles */
+        #payment-section {
+            background-color: #ffffff;
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+
+        #payment-section h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #payment-section p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .payment-method {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            width: 250px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .payment-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-method h4 {
+            color: #007bff;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        #payment-button,
+        #generate-qr-btn {
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #payment-button:hover,
+        #generate-qr-btn:hover {
+            background-color: #218838;
+        }
+
+        #qr-code-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #qr-code-container.show {
+            display: flex;
+        }
+
+        #qr-code-image {
+            width: 200px;
+            height: 200px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Newsletter Section */
+        #newsletter input,
+        #newsletter button {
+            outline: none;
+        }
+
+        /* Testimonials Section */
+        #testimonials div p {
+            font-size: 1rem;
+        }
+
+        /* Footer Section */
+        footer a:hover {
+            color: #ff6b6b;
+        }
+
+        /* Additional improvements */
+        button:focus {
+            outline: 2px solid #007bff;
+        }
+
+        input:focus {
+            outline: 2px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">EXPLOREWORLD</div>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="explore.html">EXPLORE</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+                <li><a href="login.html">LOGIN</a></li>
+                <li><a href="signup.html">SIGNUP</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>START YOUR NEXT ADVENTURE</h1>
+            <p>DISCOVER BREATHTAKING DESTINATIONS AND PLAN YOUR PERFECT TRIP.</p>
+            <a href="explore.html" class="btn">START EXPLORING NOW</a>
+        </section>
+
+        <!-- Payment Section -->
+        <section id="payment-section" class="container">
+            <h2>READY TO BOOK YOUR TRIP?</h2>
+            <p>Secure your adventure with our easy and reliable payment system. Choose your preferred method to complete your booking.</p>
+            
+            <div class="payment-methods">
+                <div class="payment-method">
+                    <h4>Pay with Card</h4>
+                    <p>Enter your card details securely to complete your payment.</p>
+                    <button id="payment-button">Pay with Card</button>
+                </div>
+                <div class="payment-method">
+                    <h4>Scan to Pay</h4>
+                    <p>Use any UPI app to scan and pay directly from your mobile.</p>
+                    <button id="generate-qr-btn">Generate QR Code</button>
+                </div>
+            </div>
+
+            <div id="qr-code-container">
+                <p>Scan this QR code to complete your payment.</p>
+                <img id="qr-code-image" src="" alt="QR Code" style="display:none;">
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section id="newsletter" style="background:#2c2c2c; color:#fff; padding:60px 20px; text-align:center; margin-top:40px;">
+            <h2 style="color:#ff4d4d; font-size:2.5rem; margin-bottom:20px;">Stay Updated!</h2>
+            <p style="max-width:600px; margin:0 auto 20px; font-size:1.2rem; color:#ccc;">
+                Subscribe to our newsletter and never miss the best travel deals and destinations.
+            </p>
+            <form style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                <input type="email" placeholder="Enter your email" required 
+                       style="padding:15px; width:300px; border:none; border-radius:5px;">
+                <button type="submit" 
+                        style="padding:15px 30px; background:#ff4d4d; color:#fff; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">
+                    Subscribe
+                </button>
+            </form>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="container" style="padding:60px 20px; text-align:center;">
+            <h2 style="font-size:2.5rem; color:#333; margin-bottom:40px;">What Our Travelers Say</h2>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:20px;">
+                <div style="background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+                    <p>"ExploreWorld made booking my Bali trip so easy! Highly recommend."</p>
+                    <h4 style="margin-top:15px; color:#ff4d4d;">– Sarah L.</h4>
+                </div>
+                <div style="background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+                    <p>"I love how simple the QR payment option is. Smooth experience!"</p>
+                    <h4 style="margin-top:15px; color:#ff4d4d;">– Alex P.</h4>
+                </div>
+                <div style="background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+                    <p>"The best platform for planning trips. The features are amazing."</p>
+                    <h4 style="margin-top:15px; color:#ff4d4d;">– Priya K.</h4>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer style="background:#1c1c1c; color:#ccc; padding:40px 20px; text-align:center; margin-top:auto;">
+        <div style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px;">
+            <div>
+                <h3 style="color:#ff4d4d;">ExploreWorld</h3>
+                <p>Making travel simple, fun, and accessible for everyone.</p>
+            </div>
+            <div>
+                <h4 style="color:#fff;">Quick Links</h4>
+                <ul style="list-style:none; padding:0;">
+                    <li><a href="index.html" style="color:#ccc; text-decoration:none;">Home</a></li>
+                    <li><a href="explore.html" style="color:#ccc; text-decoration:none;">Explore</a></li>
+                    <li><a href="about.html" style="color:#ccc; text-decoration:none;">About</a></li>
+                    <li><a href="contact.html" style="color:#ccc; text-decoration:none;">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color:#fff;">Follow Us</h4>
+                <p>
+                    <a href="#" style="color:#ff4d4d; margin:0 10px;">Facebook</a> |
+                    <a href="#" style="color:#ff4d4d; margin:0 10px;">Instagram</a> |
+                    <a href="#" style="color:#ff4d4d; margin:0 10px;">Twitter</a>
+                </p>
+            </div>
+        </div>
+        <p style="margin-top:20px; font-size:0.9rem; color:#777;">&copy; 2025 ExploreWorld. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.getElementById('generate-qr-btn').addEventListener('click', function() {
+            const qrCodeContainer = document.getElementById('qr-code-container');
+            const qrCodeImage = document.getElementById('qr-code-image');
+            const dummyQrCodeUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PlaceholderPaymentInfo12345';
+            qrCodeImage.src = dummyQrCodeUrl;
+            qrCodeImage.style.display = 'block';
+            qrCodeContainer.classList.add('show');
+        });
+
+        document.getElementById('payment-button').addEventListener('click', function() {
+            alert('Redirecting to secure card payment gateway...');
+        });
+    </script>
+</body>
+</html>

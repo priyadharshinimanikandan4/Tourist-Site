@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Travel Itinerary Planner</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Flatpickr CSS for the date picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .loading-spinner {
+            border-top-color: #3b82f6;
+            -webkit-animation: spinner 1.5s linear infinite;
+            animation: spinner 1.5s linear infinite;
+        }
+        @-webkit-keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Custom alert box styling */
+        .custom-alert {
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .custom-alert.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Custom Alert Box -->
+    <div id="custom-alert" class="custom-alert fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full text-center">
+            <p id="alert-message" class="text-lg font-semibold text-gray-800 mb-4"></p>
+            <button id="alert-ok-btn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700">OK</button>
+        </div>
+    </div>
+
+    <div class="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden md:flex md:flex-row-reverse">
+        
+        <!-- Right Column: Results Area -->
+        <div class="md:w-3/5 p-8 flex flex-col">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Your Personalized Trip Info</h2>
+            
+            <div id="itinerary-loading" class="hidden flex items-center justify-center h-full">
+                <div class="loading-spinner h-12 w-12 rounded-full border-4 border-gray-200 border-t-blue-500"></div>
+            </div>
+
+            <div id="itinerary-results" class="hidden flex-grow space-y-8">
+                <h3 class="text-2xl font-semibold text-gray-700">Daily Itinerary</h3>
+                <div id="itinerary-list" class="space-y-6">
+                    <!-- Itinerary content will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <div id="packing-results" class="hidden flex-grow space-y-4">
+                <h3 class="text-2xl font-semibold text-gray-700">Suggested Packing List</h3>
+                <div id="packing-list" class="space-y-4">
+                    <!-- Packing list content will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <div id="cultural-results" class="hidden flex-grow space-y-4">
+                <h3 class="text-2xl font-semibold text-gray-700">Cultural Tips & Phrases</h3>
+                <div id="cultural-info" class="bg-gray-50 p-6 rounded-lg shadow-md whitespace-pre-wrap">
+                    <!-- Cultural info will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <div id="weather-results" class="hidden flex-grow space-y-4">
+                <h3 class="text-2xl font-semibold text-gray-700">Weather Forecast</h3>
+                <div id="weather-info" class="bg-gray-50 p-6 rounded-lg shadow-md whitespace-pre-wrap">
+                    <!-- Weather info will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <div id="cost-results" class="hidden flex-grow space-y-4">
+                <h3 class="text-2xl font-semibold text-gray-700">Estimated Cost</h3>
+                <div id="cost-info" class="bg-gray-50 p-6 rounded-lg shadow-md whitespace-pre-wrap">
+                    <!-- Cost info will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <div id="itinerary-error" class="hidden text-center text-red-500 font-medium py-8">
+                <p>An error occurred. Please try again.</p>
+            </div>
+        </div>
+
+        <!-- Left Column: Input Form -->
+        <div class="md:w-2/5 p-8 bg-blue-600 text-white flex flex-col justify-center">
+            <h1 class="text-4xl font-bold mb-4">Plan Your Trip</h1>
+            <p class="text-blue-200 mb-8">Enter your details and let our AI create a perfect itinerary for you.</p>
+            
+            <div class="space-y-6">
+                <div class="input-group">
+                    <label for="destination" class="block font-semibold mb-2">Destination</label>
+                    <input type="text" id="destination" class="w-full p-3 rounded-lg bg-blue-500 placeholder-blue-200 text-white focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="e.g., Paris, Tokyo, Rome">
+                </div>
+                
+                <div class="input-group">
+                    <label for="travel-dates" class="block font-semibold mb-2">Travel Dates</label>
+                    <input type="text" id="travel-dates" class="w-full p-3 rounded-lg bg-blue-500 placeholder-blue-200 text-white focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Select your dates">
+                </div>
+                
+                <div class="input-group">
+                    <label for="travel-style" class="block font-semibold mb-2">Travel Style</label>
+                    <select id="travel-style" class="w-full p-3 rounded-lg bg-blue-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-300">
+                        <option value="Relaxed">Relaxed & Leisurely</option>
+                        <option value="Adventure">Adventure & Outdoors</option>
+                        <option value="Cultural">Cultural & Historical</option>
+                        <option value="Foodie">Foodie & Culinary</option>
+                    </select>
+                </div>
+                
+                <button id="generate-itinerary-btn" class="w-full py-3 px-6 bg-white text-blue-600 font-bold rounded-lg shadow-lg hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-white">
+                    ✨ Generate Itinerary
+                </button>
+
+                <button id="generate-packing-btn" class="w-full py-3 px-6 bg-white text-blue-600 font-bold rounded-lg shadow-lg hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-white">
+                    ✨ Generate Packing List
+                </button>
+
+                <button id="generate-culture-btn" class="w-full py-3 px-6 bg-white text-blue-600 font-bold rounded-lg shadow-lg hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-white">
+                    ✨ Get Cultural Tips & Phrases
+                </button>
+
+                <button id="generate-weather-btn" class="w-full py-3 px-6 bg-white text-blue-600 font-bold rounded-lg shadow-lg hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-white">
+                    🌤️ Get Weather Forecast
+                </button>
+
+                <button id="generate-cost-btn" class="w-full py-3 px-6 bg-white text-blue-600 font-bold rounded-lg shadow-lg hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-white">
+                    💰 Get Cost Estimate
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            flatpickr("#travel-dates", {
+                mode: "range",
+                dateFormat: "Y-m-d",
+                minDate: "today"
+            });
+
+            // UI Elements
+            const destinationInput = document.getElementById('destination');
+            const datesInput = document.getElementById('travel-dates');
+            const styleSelect = document.getElementById('travel-style');
+            const itineraryBtn = document.getElementById('generate-itinerary-btn');
+            const packingBtn = document.getElementById('generate-packing-btn');
+            const cultureBtn = document.getElementById('generate-culture-btn');
+            const weatherBtn = document.getElementById('generate-weather-btn');
+            const costBtn = document.getElementById('generate-cost-btn');
+
+            const loadingDiv = document.getElementById('itinerary-loading');
+            const resultsDivs = {
+                itinerary: document.getElementById('itinerary-results'),
+                packing: document.getElementById('packing-results'),
+                cultural: document.getElementById('cultural-results'),
+                weather: document.getElementById('weather-results'),
+                cost: document.getElementById('cost-results')
+            };
+            const errorDiv = document.getElementById('itinerary-error');
+            const itineraryList = document.getElementById('itinerary-list');
+            const packingList = document.getElementById('packing-list');
+            const culturalInfo = document.getElementById('cultural-info');
+            const weatherInfo = document.getElementById('weather-info');
+            const costInfo = document.getElementById('cost-info');
+
+            const customAlert = document.getElementById('custom-alert');
+            const alertMessage = document.getElementById('alert-message');
+            const alertOkBtn = document.getElementById('alert-ok-btn');
+
+            // Globals
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            const apiKey = "AIzaSyC5hCWRAHonrFsnmoiFIA4MMBnCYSwVfl0";
+            const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=" + apiKey;
+
+            // Replaces the native alert() with a custom UI message
+            const showMessage = (message) => {
+                alertMessage.textContent = message;
+                customAlert.classList.add('visible');
+            };
+
+            alertOkBtn.addEventListener('click', () => {
+                customAlert.classList.remove('visible');
+            });
+
+            // Hides all results and shows the loading spinner
+            const startLoading = () => {
+                Object.values(resultsDivs).forEach(div => div.classList.add('hidden'));
+                errorDiv.classList.add('hidden');
+                loadingDiv.classList.remove('hidden');
+            };
+
+            // Hides the loading spinner
+            const stopLoading = () => {
+                loadingDiv.classList.add('hidden');
+            };
+
+            // Main function to call the API with a given payload and prompt
+            const callGeminiAPI = async (payload) => {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    const result = await response.json();
+                    return result.candidates?.[0]?.content?.parts?.[0]?.text;
+                } catch (error) {
+                    console.error('API call error:', error);
+                    errorDiv.classList.remove('hidden');
+                    return null;
+                }
+            };
+
+            // Event listener for Itinerary generation
+            itineraryBtn.addEventListener('click', async () => {
+                const destination = destinationInput.value.trim();
+                const dates = datesInput.value.split(' to ');
+                const travelStyle = styleSelect.value;
+                
+                if (!destination || dates.length !== 2) {
+                    showMessage('Please enter a destination and select a date range.');
+                    return;
+                }
+                
+                startLoading();
+
+                const systemPrompt = "You are an expert travel planner. Create a daily itinerary for a trip. Respond only with a JSON array, where each object represents one day.";
+                const userQuery = `Create a detailed travel itinerary for a trip to ${destination} from ${dates[0]} to ${dates[1]}. The user's travel style is "${travelStyle}". The itinerary should include flights, accommodations, activities, and dining suggestions for each day.`;
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "ARRAY",
+                            items: {
+                                type: "OBJECT",
+                                properties: {
+                                    "day": { "type": "INTEGER" },
+                                    "date": { "type": "STRING" },
+                                    "activities": {
+                                        "type": "ARRAY",
+                                        "items": { "type": "STRING" }
+                                    },
+                                    "accommodations": { "type": "STRING" },
+                                    "flights": { "type": "STRING" }
+                                }
+                            }
+                        }
+                    }
+                };
+
+                const jsonString = await callGeminiAPI(payload);
+                if (jsonString) {
+                    try {
+                        const itinerary = JSON.parse(jsonString);
+                        renderItinerary(itinerary);
+                    } catch (e) {
+                        console.error("Failed to parse itinerary JSON:", e);
+                        errorDiv.classList.remove('hidden');
+                    }
+                }
+                stopLoading();
+            });
+
+            // Event listener for Packing List generation
+            packingBtn.addEventListener('click', async () => {
+                const destination = destinationInput.value.trim();
+                const dates = datesInput.value.split(' to ');
+
+                if (!destination || dates.length !== 2) {
+                    showMessage('Please enter a destination and select a date range to generate a packing list.');
+                    return;
+                }
+
+                startLoading();
+
+                const systemPrompt = "You are a travel expert. Generate a comprehensive packing list based on the destination and travel dates. Respond only with a JSON object where keys are categories and values are arrays of items.";
+                const userQuery = `Generate a detailed packing list for a trip to ${destination} from ${dates[0]} to ${dates[1]}. Consider the typical weather and common activities.`;
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "Essentials": { "type": "ARRAY", "items": { "type": "STRING" } },
+                                "Clothing": { "type": "ARRAY", "items": { "type": "STRING" } },
+                                "Toiletries": { "type": "ARRAY", "items": { "type": "STRING" } },
+                                "Electronics": { "type": "ARRAY", "items": { "type": "STRING" } },
+                                "Optional Items": { "type": "ARRAY", "items": { "type": "STRING" } },
+                            }
+                        }
+                    }
+                };
+
+                const jsonString = await callGeminiAPI(payload);
+                if (jsonString) {
+                    try {
+                        const packingListObject = JSON.parse(jsonString);
+                        renderPackingList(packingListObject);
+                    } catch (e) {
+                        console.error("Failed to parse packing list JSON:", e);
+                        errorDiv.classList.remove('hidden');
+                    }
+                }
+                stopLoading();
+            });
+
+            // Event listener for Cultural Tips generation
+            cultureBtn.addEventListener('click', async () => {
+                const destination = destinationInput.value.trim();
+                if (!destination) {
+                    showMessage('Please enter a destination to get cultural tips and phrases.');
+                    return;
+                }
+
+                startLoading();
+
+                const systemPrompt = "You are a cultural expert. Provide essential cultural tips and common local phrases for a traveler. Respond as a single block of markdown text.";
+                const userQuery = `Provide 5 essential cultural tips and 5 common local phrases with their English translations for a visitor to ${destination}.`;
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                const markdownText = await callGeminiAPI(payload);
+                if (markdownText) {
+                    renderCulturalTips(markdownText);
+                }
+                stopLoading();
+            });
+
+            // Event listener for Weather generation
+            weatherBtn.addEventListener('click', async () => {
+                const destination = destinationInput.value.trim();
+                const dates = datesInput.value.split(' to ');
+                
+                if (!destination || dates.length !== 2) {
+                    showMessage('Please enter a destination and select a date range to get the weather forecast.');
+                    return;
+                }
+
+                startLoading();
+
+                const systemPrompt = "You are an expert meteorologist and travel advisor. Provide a concise, friendly summary of the typical weather during the specified travel dates and destination. Do not provide a JSON response. Respond as a single block of markdown text.";
+                const userQuery = `Provide the typical weather forecast for a trip to ${destination} from ${dates[0]} to ${dates[1]}. Mention temperature ranges, precipitation, and general conditions.`;
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                const markdownText = await callGeminiAPI(payload);
+                if (markdownText) {
+                    renderWeatherInfo(markdownText);
+                }
+                stopLoading();
+            });
+
+            // Event listener for Cost Estimation
+            costBtn.addEventListener('click', async () => {
+                const destination = destinationInput.value.trim();
+                const dates = datesInput.value.split(' to ');
+                
+                if (!destination || dates.length !== 2) {
+                    showMessage('Please enter a destination and select a date range to get a cost estimate.');
+                    return;
+                }
+                
+                startLoading();
+                
+                const systemPrompt = "You are a world-class financial analyst and travel advisor. Provide a rough cost estimate for a trip based on the provided destination and dates. Respond as a single block of markdown text.";
+                const userQuery = `Provide a rough cost estimate for a trip to ${destination} from ${dates[0]} to ${dates[1]}. Break down the estimate into categories like flights, accommodation, food, and activities.`;
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                const markdownText = await callGeminiAPI(payload);
+                if (markdownText) {
+                    renderCostInfo(markdownText);
+                }
+                stopLoading();
+            });
+
+            // Rendering functions
+            function renderItinerary(itinerary) {
+                itineraryList.innerHTML = '';
+                itinerary.forEach(dayPlan => {
+                    const dayCard = document.createElement('div');
+                    dayCard.className = "bg-gray-50 p-6 rounded-lg shadow-md";
+                    
+                    let activitiesHtml = dayPlan.activities.map(activity => `<li class="text-gray-700">${activity}</li>`).join('');
+                    
+                    dayCard.innerHTML = `
+                        <h4 class="text-xl font-bold text-gray-800 mb-2">Day ${dayPlan.day}: ${dayPlan.date}</h4>
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-500 mb-1"><strong>Flights:</strong> ${dayPlan.flights}</p>
+                            <p class="text-sm text-gray-500"><strong>Accommodations:</strong> ${dayPlan.accommodations}</p>
+                        </div>
+                        <h5 class="font-semibold text-gray-700 mb-2">Activities:</h5>
+                        <ul class="list-disc list-inside space-y-1">
+                            ${activitiesHtml}
+                        </ul>
+                    `;
+                    itineraryList.appendChild(dayCard);
+                });
+                resultsDivs.itinerary.classList.remove('hidden');
+            }
+
+            function renderPackingList(packingItems) {
+                packingList.innerHTML = '';
+                for (const category in packingItems) {
+                    if (packingItems.hasOwnProperty(category)) {
+                        const categoryDiv = document.createElement('div');
+                        categoryDiv.className = "bg-gray-50 p-6 rounded-lg shadow-md";
+                        
+                        let itemsHtml = packingItems[category].map(item => `<li class="text-gray-700">${item}</li>`).join('');
+                        
+                        categoryDiv.innerHTML = `
+                            <h4 class="text-xl font-bold text-gray-800 mb-2">${category}</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                ${itemsHtml}
+                            </ul>
+                        `;
+                        packingList.appendChild(categoryDiv);
+                    }
+                }
+                resultsDivs.packing.classList.remove('hidden');
+            }
+
+            function renderCulturalTips(markdownText) {
+                culturalInfo.innerHTML = '';
+                // Simple markdown-like rendering for demonstration
+                const htmlContent = markdownText
+                    .replace(/###\s*(.*)/g, '<h4 class="text-xl font-semibold mt-4 mb-2">$1</h4>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br>');
+                culturalInfo.innerHTML = htmlContent;
+                resultsDivs.cultural.classList.remove('hidden');
+            }
+
+            function renderWeatherInfo(markdownText) {
+                weatherInfo.innerHTML = '';
+                const htmlContent = markdownText
+                    .replace(/###\s*(.*)/g, '<h4 class="text-xl font-semibold mt-4 mb-2">$1</h4>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br>');
+                weatherInfo.innerHTML = htmlContent;
+                resultsDivs.weather.classList.remove('hidden');
+            }
+
+            function renderCostInfo(markdownText) {
+                costInfo.innerHTML = '';
+                const htmlContent = markdownText
+                    .replace(/###\s*(.*)/g, '<h4 class="text-xl font-semibold mt-4 mb-2">$1</h4>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br>');
+                costInfo.innerHTML = htmlContent;
+                resultsDivs.cost.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

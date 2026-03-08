@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExploreWorld - Destinations</title>
+    <style>
+        /* General body and container styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Gradient Color Variable */
+        :root {
+            --gradient: linear-gradient(45deg, #ff9933, #ff3366, #9933ff);
+            --gradient-hover: linear-gradient(135deg, #ff9933, #ff3366, #9933ff);
+        }
+
+        /* Header and Navigation Styles */
+        header {
+            background-color: #222; /* Slightly darker for better contrast */
+            color: #fff;
+            padding: 15px 0;
+            position: relative;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 25px;
+        }
+
+        header ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        header ul li a:hover {
+            background-image: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Main content and destination card styles */
+        .main-heading {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background-image: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .destination-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            padding: 40px 0;
+        }
+
+        .destination-card {
+            background: #2c2c2c;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease-in-out;
+            border: 2px solid transparent;
+            background-image: linear-gradient(#2c2c2c, #2c2c2c), var(--gradient);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .destination-card:hover {
+            transform: scale(1.05);
+        }
+
+        .destination-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 2px solid transparent;
+            background-image: linear-gradient(#1a1a1a, #1a1a1a), var(--gradient);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .destination-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .destination-info h3 {
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.6rem;
+            background-image: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .destination-info p {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        .destination-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .destination-buttons .btn {
+            flex-grow: 1;
+        }
+
+        .btn {
+            width: auto;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-align: center;
+            display: inline-block;
+            background-image: var(--gradient);
+            background-size: 200% auto;
+        }
+
+        .btn:hover {
+            background-position: right center; /* Change the direction of the gradient */
+        }
+        
+        footer {
+            background-color: #222;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">EXPLOREWORLD</div>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="explore.html">EXPLORE</a></li>
+                <li><a href="login.html">LOGIN</a></li>
+                <li><a href="signup.html">SIGNUP</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="main-heading">EXPLORE TOP DESTINATIONS</h1>
+            <div class="destination-grid">
+                <div class="destination-card">
+                    <img src="img/taj.jpg" alt="Taj Mahal, India">
+                    <div class="destination-info">
+                        <h3>TAJ MAHAL, INDIA</h3>
+                        <p>AN IMMENSE MAUSOLEUM OF WHITE MARBLE, A SYMBOL OF ETERNAL LOVE.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Taj Mahal" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Taj+Mahal" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/goa_beach.jpg" alt="Goa Beaches, India">
+                    <div class="destination-info">
+                        <h3>GOA BEACHES, INDIA</h3>
+                        <p>KNOWN FOR ITS VIBRANT NIGHTLIFE AND STUNNING PORTUGUESE HERITAGE.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Goa Beaches" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Goa+Beaches" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/manali.jpg" alt="Manali, India">
+                    <div class="destination-info">
+                        <h3>MANALI, INDIA</h3>
+                        <p>A HIMALAYAN PARADISE, OFFERING ADVENTURE AND MOUNTAIN VIEWS.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Manali" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Manali" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/newyork.jpg" alt="New York, USA">
+                    <div class="destination-info">
+                        <h3>NEW YORK, USA</h3>
+                        <p>THE CITY THAT NEVER SLEEPS. EXPERIENCE BUSTLING STREETS AND ICONIC LANDMARKS.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=New York" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/New+York" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/paris.jpg" alt="Paris, France">
+                    <div class="destination-info">
+                        <h3>PARIS, FRANCE</h3>
+                        <p>THE CITY OF LOVE. EXPLORE WORLD-CLASS ART AND ICONIC ARCHITECTURE.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Paris" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Paris" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/great_barrier.jpg" alt="Great Barrier Reef, Australia">
+                    <div class="destination-info">
+                        <h3>GREAT BARRIER REEF</h3>
+                        <p>A NATURAL WONDER, THE WORLD'S LARGEST CORAL REEF SYSTEM.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Great Barrier Reef" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Great+Barrier+Reef" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/p1.jpg" alt="Golden Temple, India">
+                    <div class="destination-info">
+                        <h3>GOLDEN TEMPLE, PUNJAB</h3>
+                        <p>A MAJESTIC SIKH SHRINE KNOWN FOR ITS GOLDEN ARCHITECTURE.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Golden Temple" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Golden+Temple" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/p2.jpg" alt="Gwalior Fort, India">
+                    <div class="destination-info">
+                        <h3>GWALIOR FORT, INDIA</h3>
+                        <p>A HILLTOP FORTRESS RICH IN HISTORY AND ARCHITECTURAL MARVELS.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Gwalior Fort" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Gwalior+Fort" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/p9.jpg" alt="Tawang, India">
+                    <div class="destination-info">
+                        <h3>TAWANG, ARUNACHAL PRADESH</h3>
+                        <p>A SERENE MOUNTAIN TOWN WITH ANCIENT MONASTERIES.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Tawang" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Tawang" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/p12.jpg" alt="Alleppey, India">
+                    <div class="destination-info">
+                        <h3>ALLEPPEY, KERALA</h3>
+                        <p>KNOWN FOR ITS BEAUTIFUL BACKWATERS AND HOUSEBOAT CRUISES.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Alleppey" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Alleppey" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/p5.jpg" alt="Camel Safari, India">
+                    <div class="destination-info">
+                        <h3>CAMEL SAFARI, RAJASTHAN</h3>
+                        <p>EXPERIENCE THE THAR DESERT ON A TRADITIONAL CAMEL SAFARI.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Camel Safari" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/search/Camel+Safari+Rajasthan" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/p6.jpg" alt="Sanchi Stupa, India">
+                    <div class="destination-info">
+                        <h3>SANCHI STUPA, MADHYA PRADESH</h3>
+                        <p>AN ANCIENT BUDDHIST COMPLEX KNOWN FOR ITS IMPRESSIVE STUPA.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Sanchi Stupa" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Sanchi+Stupa" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/p7.jpg" alt="Umngot River, India">
+                    <div class="destination-info">
+                        <h3>UMNGOT RIVER, MEGHALAYA</h3>
+                        <p>DISCOVER THE CRYSTAL-CLEAR WATERS OF ONE OF ASIA'S CLEANEST RIVERS.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Umngot River" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Umngot+River" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/p10.jpg" alt="Vivekananda Rock, India">
+                    <div class="destination-info">
+                        <h3>VIVEKANANDA ROCK, TAMIL NADU</h3>
+                        <p>A MONUMENTAL ROCK ISLAND OFF THE COAST OF KANYAKUMARI.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Vivekananda Rock" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Vivekananda+Rock+Memorial" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/p4.jpg" alt="Mehrangarh Fort, India">
+                    <div class="destination-info">
+                        <h3>MEHRANGARH FORT, RAJASTHAN</h3>
+                        <p>A MASSIVE FORT KNOWN FOR ITS INTRICATE CARVINGS AND SPACIOUS COURTYARDS.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Mehrangarh Fort" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Mehrangarh+Fort" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/p3.jpg" alt="Hampi, India">
+                    <div class="destination-info">
+                        <h3>HAMPI, KARNATAKA</h3>
+                        <p>EXPLORE THE RUINS OF ANCIENT TEMPLES AND THE CAPITAL OF THE VIJAYANAGARA EMPIRE.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Hampi" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Hampi" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/p8.jpg" alt="Mon, India">
+                    <div class="destination-info">
+                        <h3>MON, NAGALAND</h3>
+                        <p>A HILLTOP VILLAGE, HOME TO THE FAMOUS HEADHUNTER TRIBE.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Mon" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Mon,+Nagaland" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card">
+                    <img src="img/p11.jpg" alt="Colva Beach, India">
+                    <div class="destination-info">
+                        <h3>COLVA BEACH, GOA</h3>
+                        <p>A POPULAR BEACH KNOWN FOR ITS WHITE SAND AND PALM-FRINGED SHORELINE.</p>
+                        <div class="destination-buttons">
+                            <a href="books.html?destination=Colva Beach" class="btn">BOOK NOW</a>
+                            <a href="https://www.google.com/maps/place/Colva+Beach" target="_blank" class="btn">VIEW ON MAP</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
